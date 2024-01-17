@@ -1,5 +1,3 @@
-clc;
-clear;
 clear all;
 
 EEGData_Path = "C:/Users/macke/OneDrive/Documents/MACKENZIE SCHOOL STUFF/MACtion Potential/Nov14Code/EEGData";
@@ -85,5 +83,7 @@ for X = 1:58
         PX_VY_EEG_Rating = vertcat(PX_VY_EEG,Padded_PX_VY_Rating);
         All_PX_VY_EEG_Ratings{X,Y} = PX_VY_EEG_Rating;
     end
-end
+endclc;
+clear;
+
 
