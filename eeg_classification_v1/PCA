@@ -1,0 +1,27 @@
+import pandas as pd
+import numpy as np
+from scipy.io import loadmat
+#np.set_printoptions(threshold=np.inf, linewidth=np.inf)
+
+# Specify the path to your MATLAB .mat file
+matFilePath = r"C:\Users\macke\OneDrive\Documents\MACKENZIE SCHOOL STUFF\MACtion Potential\EEG2\All_PX_VY_EEG_Ratings.mat"
+
+# Load the .mat file
+matFile = loadmat(matFilePath)
+
+# Access variables in the loaded data
+Variable_in_matFile = 'All_PX_VY_EEG_Ratings'
+EEG_Ratings = matFile[Variable_in_matFile]
+
+# Goal: Determine which EEG leads PCA finds important
+# Let's start with subject 1
+
+Subj1 = EEG_Ratings[0,0]
+Subj1EEG = Subj1[0:8,:]
+Subj1EEG = Subj1EEG.T
+meanSubj1EEG = np.mean(Subj1EEG, axis=0)
+meanCentSubj1EEG = Subj1EEG - meanSubj1EEG
+
+
+
+
