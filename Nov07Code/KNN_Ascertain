@@ -1,0 +1,37 @@
+import pandas as pd
+import numpy as np
+from scipy.io import loadmat
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+#np.set_printoptions(threshold=np.inf, linewidth=np.inf)
+
+# Load data and obtain indices to extract training vs. testing data
+data = np.loadtxt(r"C:\Users\macke\OneDrive\Documents\GitHub\SN_2023\eeg_classification_v1\all_fouriers2",delimiter=",")
+PercentTraining = 0.8
+num_samples = data.shape[0]
+ind = np.arange(1,num_samples+1)
+num_train = int(num_samples*PercentTraining)
+TrainingRowInds = np.random.choice(num_samples, num_train, replace=False)
+ValidationRowInds = np.setdiff1d(np.arange(1, num_samples), TrainingRowInds)
+
+# Split training and testing data into features and labels
+TrainingFeatures = data[TrainingRowInds,:-1]
+TrainingLabels = data[TrainingRowInds,-1:]
+ValidationFeatures = data[ValidationRowInds,:-1]
+ValidationLabels = data[ValidationRowInds,-1:]
+
+# Perform KNN Classification
+knn = KNeighborsClassifier(n_neighbors=5)
+knn.fit(TrainingFeatures, TrainingLabels.ravel())
+results = knn.predict(ValidationFeatures)
+#print(results)
+
+#testing = n_network.predict(testing_features)
+count = 0
+for i in range(len(results)):
+    if ValidationLabels[i] == results[i]:
+        count += 1
+
+print("accuracy=", count/len(results))
